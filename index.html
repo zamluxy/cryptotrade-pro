@@ -1,873 +1,564 @@
 <!DOCTYPE html>
-
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoTrade Pro - Game</title>
+    <title>CryptoTrade Pro - Platform Trading Crypto</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-            body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        background: #0a0e1a;
-        color: #fff;
-        overflow-x: hidden;
-        padding-bottom: 70px;
-    }
 
-    /* Header */
-    .header {
-        background: linear-gradient(135deg, #1a1f3a 0%, #0f1419 100%);
-        padding: 15px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 2px solid #2a3f5f;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-    }
-
-    .logo {
-        font-size: 24px;
-        font-weight: bold;
-        background: linear-gradient(45deg, #00d4ff, #0099ff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .balance-info {
-        display: flex;
-        gap: 20px;
-        align-items: center;
-    }
-
-    .balance-item {
-        text-align: center;
-    }
-
-    .balance-label {
-        font-size: 12px;
-        color: #8892a0;
-    }
-
-    .balance-amount {
-        font-size: 18px;
-        font-weight: bold;
-        color: #00d4ff;
-    }
-
-    .deposit-btn {
-        background: linear-gradient(135deg, #00c851, #00ff00);
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-
-    .deposit-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 200, 81, 0.4);
-    }
-
-    /* Main Container */
-    .main-container {
-        display: flex;
-        height: calc(100vh - 140px);
-    }
-
-    /* Chart Section */
-    .chart-section {
-        flex: 1;
-        background: #0f1419;
-        border-right: 1px solid #2a3f5f;
-        position: relative;
-    }
-
-    .chart-header {
-        padding: 15px;
-        background: #1a1f3a;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .asset-selector {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .asset-dropdown {
-        background: #2a3f5f;
-        border: none;
-        color: #fff;
-        padding: 8px 15px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    .asset-change {
-        padding: 5px 10px;
-        border-radius: 5px;
-        font-size: 14px;
-        font-weight: bold;
-    }
-
-    .positive {
-        background: #00c851;
-        color: white;
-    }
-
-    .negative {
-        background: #ff4444;
-        color: white;
-    }
-
-    .chart-controls {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    }
-
-    .timeframe-btn {
-        background: #2a3f5f;
-        border: none;
-        color: #fff;
-        padding: 8px 12px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 12px;
-        transition: all 0.3s;
-    }
-
-    .timeframe-btn.active {
-        background: #00d4ff;
-        color: #000;
-    }
-
-    #tradingChart {
-        width: 100%;
-        height: calc(100% - 60px);
-        background: #0a0e1a;
-    }
-
-    /* Trading Panel */
-    .trading-panel {
-        width: 350px;
-        background: #1a1f3a;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        overflow-y: auto;
-    }
-
-    .trade-type-selector {
-        display: flex;
-        background: #0f1419;
-        border-radius: 10px;
-        padding: 5px;
-    }
-
-    .trade-type-btn {
-        flex: 1;
-        padding: 12px;
-        border: none;
-        background: transparent;
-        color: #8892a0;
-        cursor: pointer;
-        border-radius: 8px;
-        transition: all 0.3s;
-        font-weight: bold;
-    }
-
-    .trade-type-btn.active {
-        background: #2a3f5f;
-        color: #00d4ff;
-    }
-
-    .trade-amount {
-        background: #0f1419;
-        padding: 20px;
-        border-radius: 10px;
-    }
-
-    .amount-label {
-        font-size: 14px;
-        color: #8892a0;
-        margin-bottom: 10px;
-    }
-
-    .amount-input-container {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .amount-input {
-        flex: 1;
-        background: #1a1f3a;
-        border: 2px solid #2a3f5f;
-        color: #fff;
-        padding: 12px;
-        border-radius: 8px;
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .amount-presets {
-        display: flex;
-        gap: 5px;
-        margin-top: 10px;
-    }
-
-    .amount-preset {
-        padding: 8px 12px;
-        background: #2a3f5f;
-        border: none;
-        color: #fff;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 12px;
-        transition: all 0.3s;
-    }
-
-    .amount-preset:hover {
-        background: #3a4f6f;
-    }
-
-    .trade-duration {
-        background: #0f1419;
-        padding: 20px;
-        border-radius: 10px;
-    }
-
-    .duration-presets {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        margin-top: 10px;
-    }
-
-    .duration-preset {
-        padding: 10px;
-        background: #1a1f3a;
-        border: 2px solid #2a3f5f;
-        color: #fff;
-        border-radius: 8px;
-        cursor: pointer;
-        text-align: center;
-        transition: all 0.3s;
-    }
-
-    .duration-preset.active {
-        border-color: #00d4ff;
-        background: #2a3f5f;
-    }
-
-    .trade-buttons {
-        display: flex;
-        gap: 10px;
-    }
-
-    .trade-btn {
-        flex: 1;
-        padding: 20px;
-        border: none;
-        border-radius: 10px;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .trade-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-
-    .btn-up {
-        background: linear-gradient(135deg, #00c851, #00ff00);
-        color: white;
-    }
-
-    .btn-down {
-        background: linear-gradient(135deg, #ff4444, #ff0000);
-        color: white;
-    }
-
-    .trade-btn .profit {
-        font-size: 12px;
-        opacity: 0.8;
-    }
-
-    /* Active Trades */
-    .active-trades {
-        background: #0f1419;
-        padding: 20px;
-        border-radius: 10px;
-        max-height: 300px;
-        overflow-y: auto;
-    }
-
-    .active-trades h3 {
-        margin-bottom: 15px;
-        color: #00d4ff;
-    }
-
-    .trade-item {
-        background: #1a1f3a;
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .trade-info {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .trade-asset {
-        font-weight: bold;
-    }
-
-    .trade-details {
-        font-size: 12px;
-        color: #8892a0;
-    }
-
-    .trade-profit {
-        font-weight: bold;
-        font-size: 16px;
-    }
-
-    .profit-positive {
-        color: #00c851;
-    }
-
-    .profit-negative {
-        color: #ff4444;
-    }
-
-    /* Sections */
-    .section {
-        display: none;
-        padding: 20px;
-        min-height: calc(100vh - 140px);
-    }
-
-    .section.active {
-        display: block;
-    }
-
-    /* History Section */
-    .history-filters {
-        background: #1a1f3a;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
-    }
-
-    .filter-group {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .filter-label {
-        font-size: 12px;
-        color: #8892a0;
-    }
-
-    .filter-select {
-        background: #0f1419;
-        border: 2px solid #2a3f5f;
-        color: #fff;
-        padding: 8px 12px;
-        border-radius: 5px;
-    }
-
-    .history-list {
-        background: #1a1f3a;
-        border-radius: 10px;
-        overflow: hidden;
-    }
-
-    .history-item {
-        padding: 15px 20px;
-        border-bottom: 1px solid #2a3f5f;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .history-item:last-child {
-        border-bottom: none;
-    }
-
-    .history-date {
-        font-size: 12px;
-        color: #8892a0;
-    }
-
-    .history-asset {
-        font-weight: bold;
-        margin: 5px 0;
-    }
-
-    .history-amount {
-        font-size: 14px;
-    }
-
-    .history-result {
-        text-align: right;
-    }
-
-    .history-profit {
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .history-profit.positive {
-        color: #00c851;
-    }
-
-    .history-profit.negative {
-        color: #ff4444;
-    }
-
-    /* Wallet Section */
-    .wallet-container {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
-    .wallet-header {
-        background: #1a1f3a;
-        padding: 30px;
-        border-radius: 15px;
-        text-align: center;
-        margin-bottom: 30px;
-    }
-
-    .wallet-balance {
-        font-size: 48px;
-        font-weight: bold;
-        color: #00d4ff;
-        margin: 10px 0;
-    }
-
-    .wallet-label {
-        color: #8892a0;
-        font-size: 14px;
-    }
-
-    .wallet-actions {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-        margin-top: 20px;
-    }
-
-    .wallet-btn {
-        padding: 12px 24px;
-        border: none;
-        border-radius: 8px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-
-    .deposit-btn-wallet {
-        background: linear-gradient(135deg, #00c851, #00ff00);
-        color: white;
-    }
-
-    .withdraw-btn {
-        background: linear-gradient(135deg, #0099ff, #00d4ff);
-        color: white;
-    }
-
-    .crypto-list {
-        background: #1a1f3a;
-        border-radius: 15px;
-        padding: 20px;
-    }
-
-    .crypto-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 0;
-        border-bottom: 1px solid #2a3f5f;
-    }
-
-    .crypto-item:last-child {
-        border-bottom: none;
-    }
-
-    .crypto-info {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .crypto-icon {
-        width: 40px;
-        height: 40px;
-        background: #2a3f5f;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-    }
-
-    .crypto-name {
-        font-weight: bold;
-    }
-
-    .crypto-balance {
-        color: #8892a0;
-        font-size: 14px;
-    }
-
-    .crypto-value {
-        text-align: right;
-    }
-
-    .crypto-amount {
-        font-weight: bold;
-    }
-
-    .crypto-usd {
-        color: #8892a0;
-        font-size: 14px;
-    }
-
-    /* Profile Section */
-    .profile-container {
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .profile-header {
-        background: #1a1f3a;
-        padding: 30px;
-        border-radius: 15px;
-        text-align: center;
-        margin-bottom: 30px;
-    }
-
-    .profile-avatar {
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(135deg, #00d4ff, #0099ff);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 36px;
-        margin: 0 auto 15px;
-    }
-
-    .profile-name {
-        font-size: 24px;
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-
-    .profile-email {
-        color: #8892a0;
-    }
-
-    .profile-stats {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-        margin: 30px 0;
-    }
-
-    .stat-item {
-        text-align: center;
-    }
-
-    .stat-value {
-        font-size: 24px;
-        font-weight: bold;
-        color: #00d4ff;
-    }
-
-    .stat-label {
-        color: #8892a0;
-        font-size: 12px;
-        margin-top: 5px;
-    }
-
-    .profile-menu {
-        background: #1a1f3a;
-        border-radius: 15px;
-        overflow: hidden;
-    }
-
-    .menu-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        border-bottom: 1px solid #2a3f5f;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-
-    .menu-item:hover {
-        background: #2a3f5f;
-    }
-
-    .menu-item:last-child {
-        border-bottom: none;
-    }
-
-    .menu-icon {
-        margin-right: 15px;
-    }
-
-    .menu-text {
-        flex: 1;
-    }
-
-    .menu-arrow {
-        color: #8892a0;
-    }
-
-    /* Bottom Navigation */
-    .bottom-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: #1a1f3a;
-        display: flex;
-        justify-content: space-around;
-        padding: 10px 0;
-        border-top: 2px solid #2a3f5f;
-    }
-
-    .nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 5px;
-        padding: 10px;
-        cursor: pointer;
-        transition: all 0.3s;
-        color: #8892a0;
-        flex: 1;
-    }
-
-    .nav-item.active {
-        color: #00d4ff;
-    }
-
-    .nav-icon {
-        font-size: 24px;
-    }
-
-    .nav-label {
-        font-size: 12px;
-    }
-
-    /* Modal */
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.8);
-        z-index: 2000;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .modal-content {
-        background: #1a1f3a;
-        padding: 30px;
-        border-radius: 15px;
-        max-width: 400px;
-        width: 90%;
-        text-align: center;
-    }
-
-    .modal-icon {
-        font-size: 60px;
-        margin-bottom: 20px;
-    }
-
-    .modal-title {
-        font-size: 24px;
-        margin-bottom: 10px;
-    }
-
-    .modal-message {
-        color: #8892a0;
-        margin-bottom: 20px;
-    }
-
-    .modal-btn {
-        background: #00d4ff;
-        color: #fff;
-        border: none;
-        padding: 15px 30px;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-
-    .modal-btn:hover {
-        background: #00a8cc;
-    }
-
-    /* Deposit/Withdraw Modal */
-    .transaction-form {
-        text-align: left;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    .form-label {
-        display: block;
-        margin-bottom: 8px;
-        color: #8892a0;
-        font-size: 14px;
-    }
-
-    .form-input {
-        width: 100%;
-        background: #0f1419;
-        border: 2px solid #2a3f5f;
-        color: #fff;
-        padding: 12px;
-        border-radius: 8px;
-        font-size: 16px;
-    }
-
-    .form-input:focus {
-        outline: none;
-        border-color: #00d4ff;
-    }
-
-    .payment-methods {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        margin: 20px 0;
-    }
-
-    .payment-method {
-        background: #0f1419;
-        border: 2px solid #2a3f5f;
-        padding: 15px;
-        border-radius: 8px;
-        cursor: pointer;
-        text-align: center;
-        transition: all 0.3s;
-    }
-
-    .payment-method:hover {
-        border-color: #00d4ff;
-    }
-
-    .payment-method.selected {
-        border-color: #00d4ff;
-        background: #2a3f5f;
-    }
-
-    /* Animations */
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
-    }
-
-    .pulse {
-        animation: pulse 2s infinite;
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-        background: #0f1419;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: #2a3f5f;
-        border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        background: #3a4f6f;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .main-container {
-            flex-direction: column;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0e1a;
+            color: #fff;
+            overflow-x: hidden;
         }
-        
-        .trading-panel {
-            width: 100%;
-            order: -1;
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1f3a 0%, #0f1419 100%);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #2a3f5f;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        
-        .chart-section {
-            height: 400px;
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00d4ff, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
         }
-        
+
         .balance-info {
-            flex-direction: column;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .balance-item {
+            text-align: center;
+        }
+
+        .balance-label {
+            font-size: 12px;
+            color: #8892a0;
+        }
+
+        .balance-amount {
+            font-size: 18px;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 70px);
+            padding-bottom: 60px;
+        }
+
+        /* Chart Section */
+        .chart-section {
+            flex: 1;
+            background: #0f1419;
+            border-right: 1px solid #2a3f5f;
+            position: relative;
+        }
+
+        .chart-header {
+            padding: 15px;
+            background: #1a1f3a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .asset-selector {
+            display: flex;
+            align-items: center;
             gap: 10px;
         }
-        
-        .profile-stats {
-            grid-template-columns: 1fr;
-        }
-    }
-</style>
 
+        .asset-name {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .asset-change {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .positive {
+            background: #00c851;
+            color: white;
+        }
+
+        .negative {
+            background: #ff4444;
+            color: white;
+        }
+
+        #tradingChart {
+            width: 100%;
+            height: calc(100% - 60px);
+            background: #0a0e1a;
+        }
+
+        /* Trading Panel */
+        .trading-panel {
+            width: 350px;
+            background: #1a1f3a;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .trade-type-selector {
+            display: flex;
+            background: #0f1419;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .trade-type-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            color: #8892a0;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .trade-type-btn.active {
+            background: #2a3f5f;
+            color: #00d4ff;
+        }
+
+        .trade-amount {
+            background: #0f1419;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .amount-label {
+            font-size: 14px;
+            color: #8892a0;
+            margin-bottom: 10px;
+        }
+
+        .amount-input-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .amount-input {
+            flex: 1;
+            background: #1a1f3a;
+            border: 2px solid #2a3f5f;
+            color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .amount-presets {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .amount-preset {
+            padding: 8px 12px;
+            background: #2a3f5f;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .amount-preset:hover {
+            background: #3a4f6f;
+        }
+
+        .trade-duration {
+            background: #0f1419;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .duration-presets {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .duration-preset {
+            padding: 10px;
+            background: #1a1f3a;
+            border: 2px solid #2a3f5f;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .duration-preset.active {
+            border-color: #00d4ff;
+            background: #2a3f5f;
+        }
+
+        .trade-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .trade-btn {
+            flex: 1;
+            padding: 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .trade-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-up {
+            background: linear-gradient(135deg, #00c851, #00ff00);
+            color: white;
+        }
+
+        .btn-down {
+            background: linear-gradient(135deg, #ff4444, #ff0000);
+            color: white;
+        }
+
+        .trade-btn .profit {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* Active Trades */
+        .active-trades {
+            background: #0f1419;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .active-trades h3 {
+            margin-bottom: 15px;
+            color: #00d4ff;
+        }
+
+        .trade-item {
+            background: #1a1f3a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .trade-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .trade-asset {
+            font-weight: bold;
+        }
+
+        .trade-details {
+            font-size: 12px;
+            color: #8892a0;
+        }
+
+        .trade-profit {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .profit-positive {
+            color: #00c851;
+        }
+
+        .profit-negative {
+            color: #ff4444;
+        }
+
+        /* Section containers */
+        .section {
+            display: none;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .history-section, .wallet-section, .profile-section {
+            background: #1a1f3a;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        .history-table, .wallet-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .history-table th, .history-table td,
+        .wallet-table th, .wallet-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #2a3f5f;
+        }
+
+        .history-table th, .wallet-table th {
+            color: #00d4ff;
+        }
+
+        .wallet-card {
+            background: linear-gradient(135deg, #1a1f3a 0%, #0f1419 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #2a3f5f;
+        }
+
+        .wallet-address {
+            background: #0f1419;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+
+        .profile-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-label {
+            color: #8892a0;
+            font-size: 14px;
+        }
+
+        .form-input {
+            background: #0f1419;
+            border: 2px solid #2a3f5f;
+            color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .form-btn {
+            background: #00d4ff;
+            color: #fff;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .form-btn:hover {
+            background: #00a8cc;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1a1f3a;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 2px solid #2a3f5f;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #8892a0;
+        }
+
+        .nav-item.active {
+            color: #00d4ff;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+        }
+
+        .nav-label {
+            font-size: 12px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #1a1f3a;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .modal-message {
+            color: #8892a0;
+            margin-bottom: 20px;
+        }
+
+        .modal-btn {
+            background: #00d4ff;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-btn:hover {
+            background: #00a8cc;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .trading-panel {
+                width: 100%;
+                order: -1;
+            }
+            
+            .chart-section {
+                height: 400px;
+            }
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f1419;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2a3f5f;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a4f6f;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
-        <div class="logo">CryptoTrade Pro</div>
+        <div class="logo" onclick="showSection('trade')">CryptoTrade Pro</div>
         <div class="balance-info">
             <div class="balance-item">
                 <div class="balance-label">Saldo</div>
@@ -877,869 +568,717 @@
                 <div class="balance-label">Profit Hari Ini</div>
                 <div class="balance-amount" id="todayProfit" style="color: #00c851;">+$250.50</div>
             </div>
-            <button class="deposit-btn" onclick="showDepositModal()">Deposit</button>
         </div>
     </header>
 
-<!-- Trade Section -->
-<div id="tradeSection" class="section active">
+    <!-- Main Container -->
     <div class="main-container">
-        <!-- Chart Section -->
-        <div class="chart-section">
-            <div class="chart-header">
-                <div class="asset-selector">
-                    <select class="asset-dropdown" id="assetSelector" onchange="changeAsset()">
-                        <option value="BTCUSDT">BTC/USDT</option>
-                        <option value="ETHUSDT">ETH/USDT</option>
-                        <option value="BNBUSDT">BNB/USDT</option>
-                        <option value="ADAUSDT">ADA/USDT</option>
-                        <option value="DOTUSDT">DOT/USDT</option>
-                        <option value="XRPUSDT">XRP/USDT</option>
-                    </select>
-                    <span class="asset-change positive" id="assetChange">+2.45%</span>
+        <!-- Trade Section (Default) -->
+        <div class="section active" id="tradeSection">
+            <!-- Chart Section -->
+            <div class="chart-section">
+                <div class="chart-header">
+                    <div class="asset-selector">
+                        <span class="asset-name">BTC/USDT</span>
+                        <span class="asset-change positive" id="assetChange">+2.45%</span>
+                    </div>
+                    <div class="chart-controls">
+                        <button class="amount-preset" onclick="changeTimeframe('1m')">1M</button>
+                        <button class="amount-preset" onclick="changeTimeframe('5m')">5M</button>
+                        <button class="amount-preset" onclick="changeTimeframe('1h')">1H</button>
+                        <button class="amount-preset" onclick="changeTimeframe('1d')">1D</button>
+                    </div>
                 </div>
-                <div class="chart-controls">
-                    <button class="timeframe-btn active" onclick="changeTimeframe('1m')">1M</button>
-                    <button class="timeframe-btn" onclick="changeTimeframe('5m')">5M</button>
-                    <button class="timeframe-btn" onclick="changeTimeframe('15m')">15M</button>
-                    <button class="timeframe-btn" onclick="changeTimeframe('1h')">1H</button>
-                    <button class="timeframe-btn" onclick="changeTimeframe('4h')">4H</button>
-                    <button class="timeframe-btn" onclick="changeTimeframe('1d')">1D</button>
+                <canvas id="tradingChart"></canvas>
+            </div>
+
+            <!-- Trading Panel -->
+            <div class="trading-panel">
+                <!-- Trade Type Selector -->
+                <div class="trade-type-selector">
+                    <button class="trade-type-btn active" onclick="setTradeType('binary')">Binary</button>
+                    <button class="trade-type-btn" onclick="setTradeType('forex')">Forex</button>
+                </div>
+
+                <!-- Amount Input -->
+                <div class="trade-amount">
+                    <div class="amount-label">Jumlah Investasi</div>
+                    <div class="amount-input-container">
+                        <span>$</span>
+                        <input type="number" class="amount-input" id="investAmount" value="100" min="1" max="10000">
+                    </div>
+                    <div class="amount-presets">
+                        <button class="amount-preset" onclick="setAmount(10)">$10</button>
+                        <button class="amount-preset" onclick="setAmount(50)">$50</button>
+                        <button class="amount-preset" onclick="setAmount(100)">$100</button>
+                        <button class="amount-preset" onclick="setAmount(500)">$500</button>
+                        <button class="amount-preset" onclick="setAmount(1000)">$1000</button>
+                    </div>
+                </div>
+
+                <!-- Duration -->
+                <div class="trade-duration">
+                    <div class="amount-label">Durasi Trading</div>
+                    <div class="duration-presets">
+                        <button class="duration-preset active" onclick="setDuration(60)">1M</button>
+                        <button class="duration-preset" onclick="setDuration(300)">5M</button>
+                        <button class="duration-preset" onclick="setDuration(900)">15M</button>
+                        <button class="duration-preset" onclick="setDuration(1800)">30M</button>
+                        <button class="duration-preset" onclick="setDuration(3600)">1H</button>
+                        <button class="duration-preset" onclick="setDuration(86400)">1D</button>
+                    </div>
+                </div>
+
+                <!-- Trade Buttons -->
+                <div class="trade-buttons">
+                    <button class="trade-btn btn-up" onclick="placeTrade('up')">
+                        <span>NAIK</span>
+                        <span class="profit">Profit 85%</span>
+                    </button>
+                    <button class="trade-btn btn-down" onclick="placeTrade('down')">
+                        <span>TURUN</span>
+                        <span class="profit">Profit 85%</span>
+                    </button>
+                </div>
+
+                <!-- Active Trades -->
+                <div class="active-trades">
+                    <h3>Trading Aktif (<span id="activeCount">0</span>)</h3>
+                    <div id="activeTradesList"></div>
                 </div>
             </div>
-            <canvas id="tradingChart"></canvas>
         </div>
 
-        <!-- Trading Panel -->
-        <div class="trading-panel">
-            <!-- Trade Type Selector -->
-            <div class="trade-type-selector">
-                <button class="trade-type-btn active" onclick="setTradeType('binary')">Binary</button>
-                <button class="trade-type-btn" onclick="setTradeType('forex')">Forex</button>
-                <button class="trade-type-btn" onclick="setTradeType('crypto')">Crypto</button>
+        <!-- History Section -->
+        <div class="section" id="historySection">
+            <div class="history-section">
+                <h2>Riwayat Trading</h2>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Pasangan</th>
+                            <th>Arah</th>
+                            <th>Jumlah</th>
+                            <th>Entry</th>
+                            <th>Exit</th>
+                            <th>Profit</th>
+                            <th>Waktu</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody">
+                        <!-- Will be populated by JavaScript -->
+                    </tbody>
+                </table>
             </div>
+        </div>
 
-            <!-- Amount Input -->
-            <div class="trade-amount">
-                <div class="amount-label">Jumlah Investasi</div>
-                <div class="amount-input-container">
-                    <span>$</span>
-                    <input type="number" class="amount-input" id="investAmount" value="100" min="1" max="10000">
+        <!-- Wallet Section -->
+        <div class="section" id="walletSection">
+            <div class="wallet-section">
+                <h2>Dompet Saya</h2>
+                
+                <div class="wallet-card">
+                    <h3>Saldo Utama</h3>
+                    <div class="balance-amount" style="font-size: 24px;" id="walletBalance">$10,000.00</div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Alamat Dompet</label>
+                        <div class="wallet-address" id="walletAddress">0x1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t</div>
+                    </div>
                 </div>
-                <div class="amount-presets">
-                    <button class="amount-preset" onclick="setAmount(10)">$10</button>
-                    <button class="amount-preset" onclick="setAmount(50)">$50</button>
-                    <button class="amount-preset" onclick="setAmount(100)">$100</button>
-                    <button class="amount-preset" onclick="setAmount(500)">$500</button>
-                    <button class="amount-preset" onclick="setAmount(1000)">$1000</button>
+                
+                <h3>Aset Saya</h3>
+                <table class="wallet-table">
+                    <thead>
+                        <tr>
+                            <th>Aset</th>
+                            <th>Jumlah</th>
+                            <th>Nilai (USD)</th>
+                            <th>Perubahan (24j)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="walletTableBody">
+                        <!-- Will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div class="section" id="profileSection">
+            <div class="profile-section">
+                <h2>Profil Saya</h2>
+                
+                <form class="profile-form" id="profileForm">
+                    <div class="form-group">
+                        <label class="form-label">Nama Lengkap</label>
+                        <input type="text" class="form-input" id="profileName" value="John Doe">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="profileEmail" value="john.doe@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Telepon</label>
+                        <input type="tel" class="form-input" id="profilePhone" value="+628123456789">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Verifikasi Akun</label>
+                        <div style="color: #00c851; margin-top: 5px;">✓ Terverifikasi</div>
+                    </div>
+                    
+                    <button type="button" class="form-btn" onclick="updateProfile()">Simpan Perubahan</button>
+                </form>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Statistik Trading</h3>
+                    <table class="history-table">
+                        <tr>
+                            <td>Total Trading</td>
+                            <td id="totalTrades">24</td>
+                        </tr>
+                        <tr>
+                            <td>Trading Berhasil</td>
+                            <td id="successTrades">20 (83.3%)</td>
+                        </tr>
+                        <tr>
+                            <td>Total Profit</td>
+                            <td style="color: #00c851;" id="totalProfit">+$1,245.50</td>
+                        </tr>
+                        <tr>
+                            <td>Bergabung Sejak</td>
+                            <td>15 Jan 2023</td>
+                        </tr>
+                    </table>
                 </div>
-            </div>
-
-            <!-- Duration -->
-            <div class="trade-duration">
-                <div class="amount-label">Durasi Trading</div>
-                <div class="duration-presets">
-                    <button class="duration-preset active" onclick="setDuration(60)">1M</button>
-                    <button class="duration-preset" onclick="setDuration(300)">5M</button>
-                    <button class="duration-preset" onclick="setDuration(900)">15M</button>
-                    <button class="duration-preset" onclick="setDuration(1800)">30M</button>
-                    <button class="duration-preset" onclick="setDuration(3600)">1H</button>
-                    <button class="duration-preset" onclick="setDuration(86400)">1D</button>
-                </div>
-            </div>
-
-            <!-- Trade Buttons -->
-            <div class="trade-buttons">
-                <button class="trade-btn btn-up" onclick="placeTrade('up')">
-                    <span>NAIK</span>
-                    <span class="profit">Profit 85%</span>
-                </button>
-                <button class="trade-btn btn-down" onclick="placeTrade('down')">
-                    <span>TURUN</span>
-                    <span class="profit">Profit 85%</span>
-                </button>
-            </div>
-
-            <!-- Active Trades -->
-            <div class="active-trades">
-                <h3>Trading Aktif (<span id="activeCount">0</span>)</h3>
-                <div id="activeTradesList"></div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- History Section -->
-<div id="historySection" class="section">
-    <div class="history-filters">
-        <div class="filter-group">
-            <label class="filter-label">Tanggal</label>
-            <select class="filter-select" onchange="filterHistory()">
-                <option value="today">Hari Ini</option>
-                <option value="week">Minggu Ini</option>
-                <option value="month">Bulan Ini</option>
-                <option value="all">Semua</option>
-            </select>
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" onclick="showSection('trade')">
+            <span class="nav-icon">📈</span>
+            <span class="nav-label">Trade</span>
         </div>
-        <div class="filter-group">
-            <label class="filter-label">Aset</label>
-            <select class="filter-select" onchange="filterHistory()">
-                <option value="all">Semua Aset</option>
-                <option value="BTCUSDT">BTC/USDT</option>
-                <option value="ETHUSDT">ETH/USDT</option>
-                <option value="BNBUSDT">BNB/USDT</option>
-            </select>
+        <div class="nav-item" onclick="showSection('history')">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">History</span>
         </div>
-        <div class="filter-group">
-            <label class="filter-label">Hasil</label>
-            <select class="filter-select" onchange="filterHistory()">
-                <option value="all">Semua</option>
-                <option value="win">Menang</option>
-                <option value="lose">Kalah</option>
-            </select>
+        <div class="nav-item" onclick="showSection('wallet')">
+            <span class="nav-icon">💰</span>
+            <span class="nav-label">Wallet</span>
+        </div>
+        <div class="nav-item" onclick="showSection('profile')">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Profile</span>
+        </div>
+    </nav>
+
+    <!-- Modal -->
+    <div class="modal" id="tradeModal">
+        <div class="modal-content">
+            <div class="modal-icon" id="modalIcon">✅</div>
+            <div class="modal-title" id="modalTitle">Trading Berhasil!</div>
+            <div class="modal-message" id="modalMessage">Trading Anda telah ditempatkan</div>
+            <button class="modal-btn" onclick="closeModal()">OK</button>
         </div>
     </div>
 
-    <div class="history-list" id="historyList">
-        <!-- History items will be populated here -->
-    </div>
-</div>
+    <script>
+        // Global Variables
+        let chart = null;
+        let chartData = [];
+        let currentPrice = 45000;
+        let balance = 10000;
+        let activeTrades = [];
+        let tradeHistory = [];
+        let currentDuration = 60;
+        let currentAmount = 100;
+        let priceHistory = [];
+        let currentTimeframe = '5m';
+        let tradeType = 'binary';
 
-<!-- Wallet Section -->
-<div id="walletSection" class="section">
-    <div class="wallet-container">
-        <div class="wallet-header">
-            <div class="wallet-label">Total Balance</div>
-            <div class="wallet-balance" id="walletBalance">$10,000.00</div>
-            <div class="wallet-actions">
-                <button class="wallet-btn deposit-btn-wallet" onclick="showDepositModal()">Deposit</button>
-                <button class="wallet-btn withdraw-btn" onclick="showWithdrawModal()">Withdraw</button>
-            </div>
-        </div>
-
-        <div class="crypto-list" id="cryptoList">
-            <!-- Crypto items will be populated here -->
-        </div>
-    </div>
-</div>
-
-<!-- Profile Section -->
-<div id="profileSection" class="section">
-    <div class="profile-container">
-        <div class="profile-header">
-            <div class="profile-avatar">👤</div>
-            <div class="profile-name id="profileName">Trader Pro</div>
-            <div class="profile-email" id="profileEmail">trader@cryptopro.com</div>
+        // Initialize Chart
+        function initChart() {
+            const canvas = document.getElementById('tradingChart');
+            const ctx = canvas.getContext('2d');
             
-            <div class="profile-stats">
-                <div class="stat-item">
-                    <div class="stat-value" id="totalTrades">0</div>
-                    <div class="stat-label">Total Trading</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="winRate">0%</div>
-                    <div class="stat-label">Win Rate</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="totalProfit">$0</div>
-                    <div class="stat-label">Total Profit</div>
-                </div>
-            </div>
-        </div>
+            // Set canvas size
+            function resizeCanvas() {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
 
-        <div class="profile-menu">
-            <div class="menu-item" onclick="showSettings()">
-                <span class="menu-icon">⚙️</span>
-                <span class="menu-text">Pengaturan</span>
-                <span class="menu-arrow">›</span>
-            </div>
-            <div class="menu-item" onclick="showVerification()">
-                <span class="menu-icon">✅</span>
-                <span class="menu-text">Verifikasi Akun</span>
-                <span class="menu-arrow">›</span>
-            </div>
-            <div class="menu-item" onclick="showEducation()">
-                <span class="menu-icon">📚</span>
-                <span class="menu-text">Pendidikan Trading</span>
-                <span class="menu-arrow">›</span>
-            </div>
-            <div class="menu-item" onclick="showSupport()">
-                <span class="menu-icon">💬</span>
-                <span class="menu-text">Bantuan & Support</span>
-                <span class="menu-arrow">›</span>
-            </div>
-            <div class="menu-item" onclick="logout()">
-                <span class="menu-icon">🚪</span>
-                <span class="menu-text">Keluar</span>
-                <span class="menu-arrow">›</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Bottom Navigation -->
-<nav class="bottom-nav">
-    <div class="nav-item active" onclick="showSection('trade')">
-        <span class="nav-icon">📈</span>
-        <span class="nav-label">Trade</span>
-    </div>
-    <div class="nav-item" onclick="showSection('history')">
-        <span class="nav-icon">📊</span>
-        <span class="nav-label">History</span>
-    </div>
-    <div class="nav-item" onclick="showSection('wallet')">
-        <span class="nav-icon">💰</span>
-        <span class="nav-label">Wallet</span>
-    </div>
-    <div class="nav-item" onclick="showSection('profile')">
-        <span class="nav-icon">👤</span>
-        <span class="nav-label">Profile</span>
-    </div>
-</nav>
-
-<!-- Trade Result Modal -->
-<div class="modal" id="tradeModal">
-    <div class="modal-content">
-        <div class="modal-icon" id="modalIcon">✅</div>
-        <div class="modal-title" id="modalTitle">Trading Berhasil!</div>
-        <div class="modal-message" id="modalMessage">Trading Anda telah ditempatkan</div>
-        <button class="modal-btn" onclick="closeModal()">OK</button>
-    </div>
-</div>
-
-<!-- Deposit Modal -->
-<div class="modal" id="depositModal">
-    <div class="modal-content">
-        <div class="modal-icon">💰</div>
-        <div class="modal-title">Deposit Dana</div>
-        <div class="transaction-form">
-            <div class="form-group">
-                <label class="form-label">Jumlah Deposit</label>
-                <input type="number" class="form-input" id="depositAmount" placeholder="Min. $10" min="10">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Metode Pembayaran</label>
-                <div class="payment-methods">
-                    <div class="payment-method" onclick="selectPayment('bank')">
-                        <div>🏦</div>
-                        <div>Bank Transfer</div>
-                    </div>
-                    <div class="payment-method" onclick="selectPayment('card')">
-                        <div>💳</div>
-                        <div>Kartu Kredit</div>
-                    </div>
-                    <div class="payment-method" onclick="selectPayment('crypto')">
-                        <div>₿</div>
-                        <div>Crypto</div>
-                    </div>
-                    <div class="payment-method" onclick="selectPayment('ewallet')">
-                        <div>📱</div>
-                        <div>E-Wallet</div>
-                    </div>
-                </div>
-            </div>
-            <button class="modal-btn" onclick="processDeposit()">Deposit Sekarang</button>
-        </div>
-    </div>
-</div>
-
-<!-- Withdraw Modal -->
-<div class="modal" id="withdrawModal">
-    <div class="modal-content">
-        <div class="modal-icon">💸</div>
-        <div class="modal-title">Withdraw Dana</div>
-        <div class="transaction-form">
-            <div class="form-group">
-                <label class="form-label">Jumlah Withdraw</label>
-                <input type="number" class="form-input" id="withdrawAmount" placeholder="Min. $20" min="20">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Alamat Wallet</label>
-                <input type="text" class="form-input" id="walletAddress" placeholder="Masukkan alamat wallet">
-            </div>
-            <button class="modal-btn" onclick="processWithdraw()">Withdraw Sekarang</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    // Global Variables
-    let chart = null;
-    let chartData = [];
-    let currentPrice = 45000;
-    let balance = 10000;
-    let activeTrades = [];
-    let tradeHistory = [];
-    let currentDuration = 60;
-    let currentAmount = 100;
-    let priceHistory = [];
-    let currentAsset = 'BTCUSDT';
-    let currentTimeframe = '1m';
-    let selectedPaymentMethod = null;
-
-    // Asset data
-    const assets = {
-        'BTCUSDT': { name: 'BTC/USDT', basePrice: 45000, icon: '₿' },
-        'ETHUSDT': { name: 'ETH/USDT', basePrice: 3200, icon: 'Ξ' },
-        'BNBUSDT': { name: 'BNB/USDT', basePrice: 420, icon: '◈' },
-        'ADAUSDT': { name: 'ADA/USDT', basePrice: 1.2, icon: '❖' },
-        'DOTUSDT': { name: 'DOT/USDT', basePrice: 25, icon: '●' },
-        'XRPUSDT': { name: 'XRP/USDT', basePrice: 0.85, icon: '✕' }
-    };
-
-    // Crypto balances for wallet
-    let cryptoBalances = {
-        'BTC': 0.5,
-        'ETH': 5.2,
-        'BNB': 15.8,
-        'ADA': 1000,
-        'DOT': 50,
-        'XRP': 500
-    };
-
-    // Initialize Chart
-    function initChart() {
-        const canvas = document.getElementById('tradingChart');
-        const ctx = canvas.getContext('2d');
-        
-        // Set canvas size
-        function resizeCanvas() {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        // Generate initial data
-        generatePriceData();
-        
-        // Draw chart
-        drawChart(ctx, canvas);
-        
-        // Update chart every second
-        setInterval(() => {
-            updatePrice();
+            // Generate initial data
+            generatePriceData();
+            
+            // Draw chart
             drawChart(ctx, canvas);
-        }, 1000);
-    }
+            
+            // Update chart every second
+            setInterval(() => {
+                updatePrice();
+                drawChart(ctx, canvas);
+            }, 1000);
+        }
 
-    // Generate realistic price data
-    function generatePriceData() {
-        const asset = assets[currentAsset];
-        const now = Date.now();
-        const basePrice = asset.basePrice;
-        
-        priceHistory = [];
-        for (let i = 100; i >= 0; i--) {
-            const time = now - (i * 60000);
-            const randomChange = (Math.random() - 0.5) * (basePrice * 0.01);
-            const trendChange = Math.sin(i / 20) * (basePrice * 0.005);
-            const price = basePrice + randomChange + trendChange;
+        // Generate realistic price data
+        function generatePriceData() {
+            const now = Date.now();
+            const basePrice = 45000;
+            
+            for (let i = 100; i >= 0; i--) {
+                const time = now - (i * 60000);
+                const randomChange = (Math.random() - 0.5) * 200;
+                const trendChange = Math.sin(i / 20) * 100;
+                const price = basePrice + randomChange + trendChange;
+                
+                priceHistory.push({
+                    time: time,
+                    price: price
+                });
+            }
+            
+            currentPrice = priceHistory[priceHistory.length - 1].price;
+        }
+
+        // Update price
+        function updatePrice() {
+            const lastPrice = priceHistory[priceHistory.length - 1].price;
+            const change = (Math.random() - 0.5) * 50;
+            const newPrice = lastPrice + change;
             
             priceHistory.push({
-                time: time,
-                price: price
+                time: Date.now(),
+                price: newPrice
             });
+            
+            // Keep only last 100 points
+            if (priceHistory.length > 100) {
+                priceHistory.shift();
+            }
+            
+            currentPrice = newPrice;
+            
+            // Update UI
+            document.querySelector('.asset-name').textContent = `BTC/USDT ${newPrice.toFixed(2)}`;
+            
+            const changePercent = ((newPrice - 45000) / 45000 * 100).toFixed(2);
+            const changeElement = document.getElementById('assetChange');
+            changeElement.textContent = `${changePercent > 0 ? '+' : ''}${changePercent}%`;
+            changeElement.className = `asset-change ${changePercent >= 0 ? 'positive' : 'negative'}`;
         }
-        
-        currentPrice = priceHistory[priceHistory.length - 1].price;
-    }
 
-    // Update price
-    function updatePrice() {
-        if (priceHistory.length === 0) return;
-        
-        const lastPrice = priceHistory[priceHistory.length - 1].price;
-        const volatility = assets[currentAsset].basePrice * 0.005;
-        const change = (Math.random() - 0.5) * volatility;
-        const newPrice = lastPrice + change;
-        
-        priceHistory.push({
-            time: Date.now(),
-            price: newPrice
-        });
-        
-        // Keep only last 100 points
-        if (priceHistory.length > 100) {
-            priceHistory.shift();
-        }
-        
-        currentPrice = newPrice;
-        
-        // Update UI
-        const asset = assets[currentAsset];
-        document.querySelector('.asset-name').textContent = `${asset.name} ${newPrice.toFixed(2)}`;
-        
-        const changePercent = ((newPrice - asset.basePrice) / asset.basePrice * 100).toFixed(2);
-        const changeElement = document.getElementById('assetChange');
-        changeElement.textContent = `${changePercent > 0 ? '+' : ''}${changePercent}%`;
-        changeElement.className = `asset-change ${changePercent >= 0 ? 'positive' : 'negative'}`;
-    }
-
-    // Draw chart
-    function drawChart(ctx, canvas) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        if (priceHistory.length < 2) return;
-        
-        const padding = 40;
-        const chartWidth = canvas.width - padding * 2;
-        const chartHeight = canvas.height - padding * 2;
-        
-        // Find min and max prices
-        const prices = priceHistory.map(p => p.price);
-        const minPrice = Math.min(...prices) * 0.995;
-        const maxPrice = Math.max(...prices) * 1.005;
-        const priceRange = maxPrice - minPrice;
-        
-        // Draw grid
-        ctx.strokeStyle = '#2a3f5f';
-        ctx.lineWidth = 1;
-        
-        // Horizontal lines
-        for (let i = 0; i <= 5; i++) {
-            const y = padding + (chartHeight / 5) * i;
+        // Draw chart
+        function drawChart(ctx, canvas) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (priceHistory.length < 2) return;
+            
+            const padding = 40;
+            const chartWidth = canvas.width - padding * 2;
+            const chartHeight = canvas.height - padding * 2;
+            
+            // Find min and max prices
+            const prices = priceHistory.map(p => p.price);
+            const minPrice = Math.min(...prices) * 0.995;
+            const maxPrice = Math.max(...prices) * 1.005;
+            const priceRange = maxPrice - minPrice;
+            
+            // Draw grid
+            ctx.strokeStyle = '#2a3f5f';
+            ctx.lineWidth = 1;
+            
+            // Horizontal lines
+            for (let i = 0; i <= 5; i++) {
+                const y = padding + (chartHeight / 5) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
+                
+                // Price labels
+                const price = maxPrice - (priceRange / 5) * i;
+                ctx.fillStyle = '#8892a0';
+                ctx.font = '12px sans-serif';
+                ctx.textAlign = 'right';
+                ctx.fillText(price.toFixed(2), padding - 10, y + 4);
+            }
+            
+            // Draw price line
+            ctx.strokeStyle = '#00d4ff';
+            ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.moveTo(padding, y);
-            ctx.lineTo(canvas.width - padding, y);
+            
+            priceHistory.forEach((point, index) => {
+                const x = padding + (chartWidth / (priceHistory.length - 1)) * index;
+                const y = padding + chartHeight - ((point.price - minPrice) / priceRange) * chartHeight;
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            
             ctx.stroke();
             
-            // Price labels
-            const price = maxPrice - (priceRange / 5) * i;
-            ctx.fillStyle = '#8892a0';
-            ctx.font = '12px sans-serif';
-            ctx.textAlign = 'right';
-            ctx.fillText(price.toFixed(2), padding - 10, y + 4);
-        }
-        
-        // Draw price line
-        ctx.strokeStyle = '#00d4ff';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        
-        priceHistory.forEach((point, index) => {
-            const x = padding + (chartWidth / (priceHistory.length - 1)) * index;
-            const y = padding + chartHeight - ((point.price - minPrice) / priceRange) * chartHeight;
+            // Draw gradient fill
+            const gradient = ctx.createLinearGradient(0, padding, 0, canvas.height - padding);
+            gradient.addColorStop(0, 'rgba(0, 212, 255, 0.3)');
+            gradient.addColorStop(1, 'rgba(0, 212, 255, 0)');
             
-            if (index === 0) {
-                ctx.moveTo(x, y);
-            } else {
-                ctx.lineTo(x, y);
-            }
-        });
-        
-        ctx.stroke();
-        
-        // Draw gradient fill
-        const gradient = ctx.createLinearGradient(0, padding, 0, canvas.height - padding);
-        gradient.addColorStop(0, 'rgba(0, 212, 255, 0.3)');
-        gradient.addColorStop(1, 'rgba(0, 212, 255, 0)');
-        
-        ctx.fillStyle = gradient;
-        ctx.lineTo(canvas.width - padding, canvas.height - padding);
-        ctx.lineTo(padding, canvas.height - padding);
-        ctx.closePath();
-        ctx.fill();
-        
-        // Draw current price line
-        const currentY = padding + chartHeight - ((currentPrice - minPrice) / priceRange) * chartHeight;
-        ctx.strokeStyle = '#ffaa00';
-        ctx.lineWidth = 1;
-        ctx.setLineDash([5, 5]);
-        ctx.beginPath();
-        ctx.moveTo(padding, currentY);
-        ctx.lineTo(canvas.width - padding, currentY);
-        ctx.stroke();
-        ctx.setLineDash([]);
-        
-        // Current price label
-        ctx.fillStyle = '#ffaa00';
-        ctx.font = 'bold 14px sans-serif';
-        ctx.textAlign = 'left';
-        ctx.fillText(`$${currentPrice.toFixed(2)}`, padding + 10, currentY - 5);
-    }
-
-    // Trading Functions
-    function setAmount(amount) {
-        currentAmount = amount;
-        document.getElementById('investAmount').value = amount;
-    }
-
-    function setDuration(seconds) {
-        currentDuration = seconds;
-        document.querySelectorAll('.duration-preset').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        event.target.classList.add('active');
-    }
-
-    function changeAsset() {
-        currentAsset = document.getElementById('assetSelector').value;
-        generatePriceData();
-    }
-
-    function changeTimeframe(timeframe) {
-        currentTimeframe = timeframe;
-        document.querySelectorAll('.timeframe-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        event.target.classList.add('active');
-        
-        // Regenerate data based on timeframe
-        generatePriceData();
-    }
-
-    function placeTrade(direction) {
-        if (currentAmount > balance) {
-            showModal('❌', 'Saldo Tidak Cukup!', 'Silakan kurangi jumlah investasi Anda');
-            return;
+            ctx.fillStyle = gradient;
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Draw current price line
+            const currentY = padding + chartHeight - ((currentPrice - minPrice) / priceRange) * chartHeight;
+            ctx.strokeStyle = '#ffaa00';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(padding, currentY);
+            ctx.lineTo(canvas.width - padding, currentY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Current price label
+            ctx.fillStyle = '#ffaa00';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(`$${currentPrice.toFixed(2)}`, padding + 10, currentY - 5);
         }
 
-        const trade = {
-            id: Date.now(),
-            asset: currentAsset,
-            direction: direction,
-            amount: currentAmount,
-            entryPrice: currentPrice,
-            duration: currentDuration,
-            startTime: Date.now(),
-            endTime: Date.now() + (currentDuration * 1000),
-            status: 'active'
+        // Trading Functions
+        function setAmount(amount) {
+            currentAmount = amount;
+            document.getElementById('investAmount').value = amount;
+        }
+
+        function setDuration(seconds) {
+            currentDuration = seconds;
+            document.querySelectorAll('.duration-preset').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function setTradeType(type) {
+            tradeType = type;
+            document.querySelectorAll('.trade-type-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            if (type === 'forex') {
+                showModal('ℹ️', 'Mode Forex', 'Anda sekarang dalam mode trading Forex');
+            }
+        }
+
+        function placeTrade(direction) {
+            if (currentAmount > balance) {
+                showModal('❌', 'Saldo Tidak Cukup!', 'Silakan kurangi jumlah investasi Anda');
+                return;
+            }
+
+            const trade = {
+                id: Date.now(),
+                asset: 'BTC/USDT',
+                direction: direction,
+                amount: currentAmount,
+                entryPrice: currentPrice,
+                duration: currentDuration,
+                startTime: Date.now(),
+                endTime: Date.now() + (currentDuration * 1000),
+                status: 'active',
+                type: tradeType
+            };
+
+            activeTrades.push(trade);
+            balance -= currentAmount;
+            updateBalance();
+            updateActiveTrades();
+            
+            showModal('✅', 'Trading Ditempatkan!', 
+                `${direction === 'up' ? 'Naik' : 'Turun'} $${currentAmount} pada BTC/USDT`);
+            
+            // Simulate trade result after duration
+            setTimeout(() => {
+                completeTrade(trade.id);
+            }, currentDuration * 1000);
+        }
+
+        function completeTrade(tradeId) {
+            const trade = activeTrades.find(t => t.id === tradeId);
+            if (!trade) return;
+
+            // Simulate trade result (85% win rate for demo)
+            const win = Math.random() < 0.85;
+            const profit = win ? trade.amount * 0.85 : -trade.amount;
+            
+            trade.status = 'completed';
+            trade.exitPrice = currentPrice;
+            trade.profit = profit;
+            trade.payout = win ? trade.amount + profit : 0;
+            trade.endTime = Date.now();
+            
+            // Move to history
+            activeTrades = activeTrades.filter(t => t.id !== tradeId);
+            tradeHistory.unshift(trade);
+            
+            // Update balance
+            balance += trade.payout || 0;
+            updateBalance();
+            updateActiveTrades();
+            
+            // Update history if visible
+            if (document.getElementById('historySection').classList.contains('active')) {
+                updateHistoryTable();
+            }
+            
+            // Update profile stats if visible
+            if (document.getElementById('profileSection').classList.contains('active')) {
+                updateProfileStats();
+            }
+            
+            // Show result
+            if (win) {
+                showModal('🎉', 'Trading Berhasil!', 
+                    `Anda mendapatkan $${profit.toFixed(2)} keuntungan`);
+            } else {
+                showModal('😞', 'Trading Gagal', 
+                    `Anda kehilangan $${trade.amount}`);
+            }
+        }
+
+        function updateBalance() {
+            document.getElementById('balance').textContent = `$${balance.toFixed(2)}`;
+            document.getElementById('walletBalance').textContent = `$${balance.toFixed(2)}`;
+            
+            // Update today's profit
+            const todayProfit = tradeHistory
+                .filter(t => t.status === 'completed' && isToday(t.endTime))
+                .reduce((sum, t) => sum + (t.profit || 0), 0);
+            
+            document.getElementById('todayProfit').textContent = 
+                `${todayProfit >= 0 ? '+' : ''}$${todayProfit.toFixed(2)}`;
+            document.getElementById('todayProfit').style.color = 
+                todayProfit >= 0 ? '#00c851' : '#ff4444';
+        }
+
+        function isToday(timestamp) {
+            const today = new Date();
+            const date = new Date(timestamp);
+            return date.getDate() === today.getDate() &&
+                   date.getMonth() === today.getMonth() &&
+                   date.getFullYear() === today.getFullYear();
+        }
+
+        function updateActiveTrades() {
+            const container = document.getElementById('activeTradesList');
+            const count = document.getElementById('activeCount');
+            
+            count.textContent = activeTrades.length;
+            
+            if (activeTrades.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: #8892a0;">Tidak ada trading aktif</div>';
+                return;
+            }
+            
+            container.innerHTML = activeTrades.map(trade => {
+                const remaining = Math.max(0, trade.endTime - Date.now());
+                const seconds = Math.floor(remaining / 1000);
+                const minutes = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                
+                const currentProfit = (currentPrice - trade.entryPrice) * 
+                    (trade.direction === 'up' ? 1 : -1);
+                const profitPercent = (currentProfit / trade.amount) * 85;
+                
+                return `
+                    <div class="trade-item">
+                        <div class="trade-info">
+                            <div class="trade-asset">
+                                ${trade.asset} ${trade.direction === 'up' ? '📈' : '📉'}
+                                ${trade.type === 'forex' ? ' (Forex)' : ''}
+                            </div>
+                            <div class="trade-details">
+                                $${trade.amount} • ${minutes}:${secs.toString().padStart(2, '0')}
+                            </div>
+                        </div>
+                        <div class="trade-profit ${profitPercent >= 0 ? 'profit-positive' : 'profit-negative'}">
+                            ${profitPercent >= 0 ? '+' : ''}${profitPercent.toFixed(2)}%
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateHistoryTable() {
+            const tableBody = document.getElementById('historyTableBody');
+            
+            if (tradeHistory.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #8892a0; padding: 20px;">Tidak ada riwayat trading</td></tr>';
+                return;
+            }
+            
+            tableBody.innerHTML = tradeHistory.map(trade => {
+                const date = new Date(trade.endTime);
+                const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+                
+                return `
+                    <tr>
+                        <td>${trade.asset}</td>
+                        <td>${trade.direction === 'up' ? 'Naik' : 'Turun'}</td>
+                        <td>$${trade.amount}</td>
+                        <td>$${trade.entryPrice.toFixed(2)}</td>
+                        <td>$${trade.exitPrice.toFixed(2)}</td>
+                        <td class="${trade.profit >= 0 ? 'profit-positive' : 'profit-negative'}">
+                            ${trade.profit >= 0 ? '+' : ''}$${Math.abs(trade.profit).toFixed(2)}
+                        </td>
+                        <td>${formattedDate}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function updateWalletTable() {
+            const tableBody = document.getElementById('walletTableBody');
+            
+            // Sample wallet data
+            const walletAssets = [
+                { symbol: 'BTC', amount: 0.15, value: 6750, change: 2.45 },
+                { symbol: 'ETH', amount: 2.5, value: 2500, change: -1.23 },
+                { symbol: 'USDT', amount: 750, value: 750, change: 0.01 },
+                { symbol: 'BNB', amount: 5, value: 500, change: 0.75 }
+            ];
+            
+            tableBody.innerHTML = walletAssets.map(asset => {
+                return `
+                    <tr>
+                        <td>${asset.symbol}</td>
+                        <td>${asset.amount}</td>
+                        <td>$${asset.value.toFixed(2)}</td>
+                        <td class="${asset.change >= 0 ? 'profit-positive' : 'profit-negative'}">
+                            ${asset.change >= 0 ? '+' : ''}${asset.change}%
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function updateProfileStats() {
+            const completedTrades = tradeHistory.filter(t => t.status === 'completed');
+            const successfulTrades = completedTrades.filter(t => t.profit > 0);
+            const totalProfit = completedTrades.reduce((sum, t) => sum + (t.profit || 0), 0);
+            const successRate = completedTrades.length > 0 ? 
+                (successfulTrades.length / completedTrades.length * 100).toFixed(1) : 0;
+            
+            document.getElementById('totalTrades').textContent = completedTrades.length;
+            document.getElementById('successTrades').textContent = 
+                `${successfulTrades.length} (${successRate}%)`;
+            document.getElementById('totalProfit').textContent = 
+                `${totalProfit >= 0 ? '+' : ''}$${Math.abs(totalProfit).toFixed(2)}`;
+            document.getElementById('totalProfit').style.color = 
+                totalProfit >= 0 ? '#00c851' : '#ff4444';
+        }
+
+        function updateProfile() {
+            const name = document.getElementById('profileName').value;
+            const email = document.getElementById('profileEmail').value;
+            const phone = document.getElementById('profilePhone').value;
+            
+            showModal('✅', 'Profil Diperbarui!', 'Perubahan profil Anda telah disimpan');
+            
+            // In a real app, you would send this data to a server
+            console.log('Profile updated:', { name, email, phone });
+        }
+
+        function showModal(icon, title, message) {
+            document.getElementById('modalIcon').textContent = icon;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('tradeModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('tradeModal').style.display = 'none';
+        }
+
+        function showSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(section + 'Section').classList.add('active');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.nav-item').classList.add('active');
+            
+            // Load section-specific data
+            if (section === 'history') {
+                updateHistoryTable();
+            } else if (section === 'wallet') {
+                updateWalletTable();
+            } else if (section === 'profile') {
+                updateProfileStats();
+            }
+        }
+
+        function changeTimeframe(timeframe) {
+            currentTimeframe = timeframe;
+            
+            // In a real app, this would fetch new chart data
+            showModal('📊', 'Timeframe Diubah', 
+                `Chart berubah ke timeframe ${timeframe}`);
+        }
+
+        // Initialize
+        window.onload = function() {
+            initChart();
+            updateActiveTrades();
+            
+            // Generate some sample trade history
+            for (let i = 0; i < 5; i++) {
+                const trade = {
+                    id: Date.now() - (i * 86400000),
+                    asset: 'BTC/USDT',
+                    direction: Math.random() > 0.5 ? 'up' : 'down',
+                    amount: 50 + Math.floor(Math.random() * 200),
+                    entryPrice: 44000 + Math.floor(Math.random() * 2000),
+                    exitPrice: 44200 + Math.floor(Math.random() * 2000),
+                    duration: 300,
+                    startTime: Date.now() - (i * 86400000) - 300000,
+                    endTime: Date.now() - (i * 86400000),
+                    status: 'completed',
+                    profit: Math.random() > 0.3 ? 42.5 : -50,
+                    type: 'binary'
+                };
+                tradeHistory.push(trade);
+            }
+            
+            // Update active trades every second
+            setInterval(updateActiveTrades, 1000);
         };
 
-        activeTrades.push(trade);
-        balance -= currentAmount;
-        updateBalance();
-        updateActiveTrades();
-        
-        showModal('✅', 'Trading Ditempatkan!', 
-            `${direction === 'up' ? 'Naik' : 'Turun'} $${currentAmount} pada ${assets[currentAsset].name}`);
-        
-        // Simulate trade result after duration
-        setTimeout(() => {
-            completeTrade(trade.id);
-        }, currentDuration * 1000);
-    }
-
-    function completeTrade(tradeId) {
-        const trade = activeTrades.find(t => t.id === tradeId);
-        if (!trade) return;
-
-        // Simulate trade result (85% win rate for demo)
-        const win = Math.random() < 0.85;
-        const profit = win ? trade.amount * 0.85 : -trade.amount;
-        
-        trade.status = 'completed';
-        trade.exitPrice = currentPrice;
-        trade.profit = profit;
-        trade.payout = win ? trade.amount + profit : 0;
-        
-        // Move to history
-        activeTrades = activeTrades.filter(t => t.id !== tradeId);
-        tradeHistory.unshift(trade);
-        
-        // Update balance
-        balance += trade.payout || 0;
-        updateBalance();
-        updateActiveTrades();
-        updateHistory();
-        
-        // Show result
-        if (win) {
-            showModal('🎉', 'Trading Berhasil!', 
-                `Anda mendapatkan $${profit.toFixed(2)} keuntungan`);
-        } else {
-            showModal('😞', 'Trading Gagal', 
-                `Anda kehilangan $${trade.amount}`);
-        }
-    }
-
-    function updateBalance() {
-        document.getElementById('balance').textContent = `$${balance.toFixed(2)}`;
-        document.getElementById('walletBalance').textContent = `$${balance.toFixed(2)}`;
-        
-        // Update today's profit
-        const todayProfit = tradeHistory
-            .filter(t => t.status === 'completed' && isToday(t.startTime))
-            .reduce((sum, t) => sum + (t.profit || 0), 0);
-        
-        document.getElementById('todayProfit').textContent = 
-            `${todayProfit >= 0 ? '+' : ''}$${todayProfit.toFixed(2)}`;
-        document.getElementById('todayProfit').style.color = 
-            todayProfit >= 0 ? '#00c851' : '#ff4444';
-    }
-
-    function isToday(timestamp) {
-        const today = new Date();
-        const date = new Date(timestamp);
-        return today.toDateString() === date.toDateString();
-    }
-
-    function updateActiveTrades() {
-        const container = document.getElementById('activeTradesList');
-        const count = document.getElementById('activeCount');
-        
-        count.textContent = activeTrades.length;
-        
-        if (activeTrades.length === 0) {
-            container.innerHTML = '<div style="text-align: center; color: #8892a0;">Tidak ada trading aktif</div>';
-            return;
-        }
-        
-        container.innerHTML = activeTrades.map(trade => {
-            const remaining = Math.max(0, trade.endTime - Date.now());
-            const seconds = Math.floor(remaining / 1000);
-            const minutes = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            
-            const currentProfit = (currentPrice - trade.entryPrice) * 
-                (trade.direction === 'up' ? 1 : -1);
-            const profitPercent = (currentProfit / trade.amount) * 85;
-            
-            return `
-                <div class="trade-item">
-                    <div class="trade-info">
-                        <div class="trade-asset">
-                            ${assets[trade.asset].icon} ${assets[trade.asset].name} ${trade.direction === 'up' ? '📈' : '📉'}
-                        </div>
-                        <div class="trade-details">
-                            $${trade.amount} • ${minutes}:${secs.toString().padStart(2, '0')}
-                        </div>
-                    </div>
-                    <div class="trade-profit ${profitPercent >= 0 ? 'profit-positive' : 'profit-negative'}">
-                        ${profitPercent >= 0 ? '+' : ''}${profitPercent.toFixed(2)}%
-                    </div>
-                </div>
-            `;
-        }).join('');
-    }
-
-    function updateHistory() {
-        const container = document.getElementById('historyList');
-        
-        if (tradeHistory.length === 0) {
-            container.innerHTML = '<div style="text-align: center; padding: 40px; color: #8892a0;">Belum ada history trading</div>';
-            return;
-        }
-        
-        container.innerHTML = tradeHistory.map(trade => {
-            const date = new Date(trade.startTime);
-            const dateStr = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
-            
-            const isWin = trade.profit > 0;
-            
-            return `
-                <div class="history-item">
-                    <div>
-                        <div class="history-date">${dateStr}</div>
-                        <div class="history-asset">${assets[trade.asset].icon} ${assets[trade.asset].name} ${trade.direction === 'up' ? '📈' : '📉'}</div>
-                        <div class="history-amount">$${trade.amount}</div>
-                    </div>
-                    <div class="history-result">
-                        <div class="history-profit ${isWin ? 'positive' : 'negative'}">
-                            ${isWin ? '+' : ''}$${trade.profit.toFixed(2)}
-                        </div>
-                        <div style="color: #8892a0; font-size: 12px;">
-                            ${isWin ? 'Menang' : 'Kalah'}
-                        </div>
-                    </div>
-                </div>
-            `;
-        }).join('');
-        
-        // Update profile stats
-        updateProfileStats();
-    }
-
-    function updateProfileStats() {
-        const totalTrades = tradeHistory.length;
-        const winTrades = tradeHistory.filter(t => t.profit > 0).length;
-        const winRate = totalTrades > 0 ? Math.round((winTrades / totalTrades) * 100) : 0;
-        const totalProfit = tradeHistory.reduce((sum, t) => sum + (t.profit || 0), 0);
-        
-        document.getElementById('totalTrades').textContent = totalTrades;
-        document.getElementById('winRate').textContent = `${winRate}%`;
-        document.getElementById('totalProfit').textContent = `$${totalProfit.toFixed(2)}`;
-        document.getElementById('totalProfit').style.color = totalProfit >= 0 ? '#00c851' : '#ff4444';
-    }
-
-    function updateCryptoList() {
-        const container = document.getElementById('cryptoList');
-        const assetKeys = Object.keys(assets);
-        
-        container.innerHTML = assetKeys.map(key => {
-            const asset = assets[key];
-            const balance = cryptoBalances[key.split('USDT')[0]];
-            const value = balance * currentPrice;
-            
-            return `
-                <div class="crypto-item">
-                    <div class="crypto-info">
-                        <div class="crypto-icon">${asset.icon}</div>
-                        <div>
-                            <div class="crypto-name">${key.split('USDT')[0]}</div>
-                            <div class="crypto-balance">${balance} ${key.split('USDT')[0]}</div>
-                        </div>
-                    </div>
-                    <div class="crypto-value">
-                        <div class="crypto-amount">$${value.toFixed(2)}</div>
-                        <div class="crypto-usd">USD</div>
-                    </div>
-                </div>
-            `;
-        }).join('');
-    }
-
-    function showSection(section) {
-        // Hide all sections
-        document.querySelectorAll('.section').forEach(s => {
-            s.classList.remove('active');
+        // Handle amount input change
+        document.getElementById('investAmount').addEventListener('input', function() {
+            currentAmount = parseFloat(this.value) || 0;
         });
-        
-        // Show selected section
-        document.getElementById(section + 'Section').classList.add('active');
-        
-        // Update nav active state
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.classList.remove('active');
-        });
-        event.target.closest('.nav-item').classList.add('active');
-        
-        // Update section specific data
-        if (section === 'history') {
-            updateHistory();
-        } else if (section === 'wallet') {
-            updateCryptoList();
-        } else if (section === 'profile') {
-            updateProfileStats();
-        }
-    }
-
-    function showModal(icon, title, message) {
-        document.getElementById('modalIcon').textContent = icon;
-        document.getElementById('modalTitle').textContent = title;
-        document.getElementById('modalMessage').textContent = message;
-        document.getElementById('tradeModal').style.display = 'flex';
-    }
-
-    function closeModal() {
-        document.getElementById('tradeModal').style.display = 'none';
-        document.getElementById('depositModal').style.display = 'none';
-        document.getElementById('withdrawModal').style.display = 'none';
-    }
-
-    function showDepositModal() {
-        document.getElementById('depositModal').style.display = 'flex';
-    }
-
-    function showWithdrawModal() {
-        document.getElementById('withdrawModal').style.display = 'flex';
-    }
-
-    function selectPayment(method) {
-        document.querySelectorAll('.payment-method').forEach(m => {
-            m.classList.remove('selected');
-        });
-        event.target.closest('.payment-method').classList.add('selected');
-        selectedPaymentMethod = method;
-    }
-
-    function processDeposit() {
-        const amount = parseFloat(document.getElementById('depositAmount').value);
-        if (!amount || amount < 10) {
-            showModal('❌', 'Error', 'Minimum deposit $10');
-            return;
-        }
-        
-        if (!selectedPaymentMethod) {
-            showModal('❌', 'Error', 'Pilih metode pembayaran');
-            return;
-        }
-        
-        balance += amount;
-        updateBalance();
-        closeModal();
-        showModal('🎉', 'Deposit Berhasil!', `$${amount} telah ditambahkan ke akun Anda`);
-    }
-
-    function processWithdraw() {
-        const amount = parseFloat(document.getElementById('withdrawAmount').value);
-        const walletAddress = document.getElementById('walletAddress').value;
-        
-        if (!amount || amount < 20) {
-            showModal('❌', 'Error', 'Minimum withdraw $20');
-            return;
-        }
-        
-        if (amount > balance) {
-            showModal('❌', 'Error', 'Saldo tidak cukup');
-            return;
-        }
-        
-        if (!walletAddress) {
-            showModal('❌', 'Error', 'Masukkan alamat wallet');
-            return;
-        }
-        
-        balance -= amount;
-        updateBalance();
-        closeModal();
-        showModal('✅', 'Withdrawal Diproses!', `$${amount} akan dikirim ke wallet Anda dalam 1-24 jam`);
-    }
-
-    function setTradeType(type) {
-        document.querySelectorAll('.trade-type-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        event.target.classList.add('active');
-    }
-
-    function filterHistory() {
-        // In real app, would filter based on selected criteria
-        updateHistory();
-    }
-
-    function showSettings() {
-        showModal('⚙️', 'Pengaturan', 'Menu pengaturan akan segera tersedia');
-    }
-
-    function showVerification() {
-        showModal('✅', 'Verifikasi Akun', 'Akun Anda telah terverifikasi ✅');
-    }
-
-    function showEducation() {
-        showModal('📚', 'Pendidikan Trading', 'Akses materi edukasi trading gratis!');
-    }
-
-    function showSupport() {
-        showModal('💬', 'Bantuan & Support', 'Hubungi support 24/7 di support@cryptopro.com');
-    }
-
-    function logout() {
-        if (confirm('Apakah Anda yakin ingin keluar?')) {
-            showModal('👋', 'Sampai Jumpa!', 'Anda telah berhasil keluar');
-            setTimeout(() => {
-                location.reload();
-            }, 2000);
-        }
-    }
-
-    // Initialize
-    window.onload = function() {
-        initChart();
-        updateActiveTrades();
-        updateCryptoList();
-        
-        // Update active trades every second
-        setInterval(() => {
-            updateActiveTrades();
-        }, 1000);
-    };
-
-    // Handle amount input change
-    document.getElementById('investAmount').addEventListener('input', function() {
-        currentAmount = parseFloat(this.value) || 0;
-    });
-    
-</script>
-  </html>
+    </script>
+</body>
+                        </html>
